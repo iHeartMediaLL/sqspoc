@@ -1,6 +1,6 @@
-package com.iheartmedia.dlct.sqspoc.sqspoc.controller;
+package com.iheartmedia.dlct.sqspoc.controller;
 
-import com.iheartmedia.dlct.sqspoc.sqspoc.service.SQSMessageSender;
+import com.iheartmedia.dlct.sqspoc.service.SQSMessageSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

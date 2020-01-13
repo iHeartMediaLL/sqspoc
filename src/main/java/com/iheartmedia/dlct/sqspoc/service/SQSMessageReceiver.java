@@ -1,4 +1,4 @@
-package com.iheartmedia.dlct.sqspoc.sqspoc.service;
+package com.iheartmedia.dlct.sqspoc.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package com.iheartmedia.dlct.sqspoc.sqspoc;
+package com.iheartmedia.dlct.sqspoc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
