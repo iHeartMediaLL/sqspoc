@@ -68,8 +68,11 @@ public class SQSMessageSender {
         SendMessageRequest sendMessageToFifoQueue = new SendMessageRequest()
                 .withQueueUrl(sqsuri)
                 .withMessageBody(gson.toJson(message))
-                .withMessageGroupId(UUID.randomUUID().toString())
-                .withMessageDeduplicationId(UUID.randomUUID().toString())
+                /*
+                Add message-group-id and message-deduplication-id if queue is fifo
+                */
+                //.withMessageGroupId(UUID.randomUUID().toString())
+                //.withMessageDeduplicationId(UUID.randomUUID().toString())
                 .withMessageAttributes(messageAttributes);
 
         sqs.sendMessage(sendMessageToFifoQueue);
@@ -78,8 +81,12 @@ public class SQSMessageSender {
     public void sendMessageWithQueueManagingTemplate(SimpleModel message){
 
         Map<String, Object> headers = new HashMap<>();
-        headers.put("message-group-id", UUID.randomUUID().toString());
-        headers.put("message-deduplication-id", UUID.randomUUID().toString());
+
+        /*
+        Add message-group-id and message-deduplication-id if queue is fifo
+        */
+        //headers.put("message-group-id", UUID.randomUUID().toString());
+        //headers.put("message-deduplication-id", UUID.randomUUID().toString());
 
         this.queueMessagingTemplate.convertAndSend(queueName, message, headers);
 
