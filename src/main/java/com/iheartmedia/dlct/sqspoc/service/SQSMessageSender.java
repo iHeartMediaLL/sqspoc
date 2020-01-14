@@ -10,6 +10,8 @@ import com.amazonaws.services.sqs.AmazonSQSAsyncClientBuilder;
 import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
 import com.amazonaws.services.sqs.model.MessageAttributeValue;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
+import com.google.gson.Gson;
+import com.iheartmedia.dlct.sqspoc.models.SimpleModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
@@ -54,7 +56,9 @@ public class SQSMessageSender {
         queueMessagingTemplate = new QueueMessagingTemplate(sqsAsync);
     }
 
-    public void sendMessage(String message){
+    public void sendMessage(SimpleModel message){
+
+        Gson gson = new Gson();
 
         Map<String, MessageAttributeValue> messageAttributes = new HashMap<>();
         messageAttributes.put("AttributeOne", new MessageAttributeValue()
@@ -63,7 +67,7 @@ public class SQSMessageSender {
 
         SendMessageRequest sendMessageToFifoQueue = new SendMessageRequest()
                 .withQueueUrl(sqsuri)
-                .withMessageBody(message)
+                .withMessageBody(gson.toJson(message))
                 .withMessageGroupId(UUID.randomUUID().toString())
                 .withMessageDeduplicationId(UUID.randomUUID().toString())
                 .withMessageAttributes(messageAttributes);
@@ -71,7 +75,7 @@ public class SQSMessageSender {
         sqs.sendMessage(sendMessageToFifoQueue);
     }
 
-    public void sendMessageWithQueueManagingTemplate(String message){
+    public void sendMessageWithQueueManagingTemplate(SimpleModel message){
 
         Map<String, Object> headers = new HashMap<>();
         headers.put("message-group-id", UUID.randomUUID().toString());
